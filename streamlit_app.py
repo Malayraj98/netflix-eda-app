@@ -5,9 +5,12 @@ import plotly.express as px
 # -------------------------------------------------------
 # 1. Load data
 # -------------------------------------------------------
+
+DATA_URL = "https://raw.githubusercontent.com/Malayraj98/netflix-eda-app/refs/heads/main/netflix_titles.csv"
+
 @st.cache_data
-def load_data():
-    df = pd.read_csv("C:/Users/KIIT/netflix-eda/data/netflix_titles.csv")
+def load_data(url):
+    df = pd.read_csv(url)
     
     # Basic cleaning
     df['date_added'] = pd.to_datetime(df['date_added'], errors='coerce')
@@ -17,7 +20,7 @@ def load_data():
     df['genres'] = df['listed_in'].fillna('').apply(lambda s: [g.strip() for g in s.split(',')] if s else [])
     return df
 
-df = load_data()
+df = load_data(DATA_URL)
 
 st.set_page_config(page_title="Netflix EDA Dashboard", layout="wide")
 
